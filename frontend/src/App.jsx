@@ -1,9 +1,10 @@
 import React from 'react'
+import Home from './pages/Home'
 
 const App = () => {
   return (
-    <div className='text-lg'>
-      helllo lets begin
+    <div>
+      <Home/>
     </div>
   )
 }
