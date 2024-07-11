@@ -18,6 +18,10 @@ export default {
         buttonSecondaryHover: '#8B5CF6', // hover:bg-purple-500
         
       },
+      fontFamily:{
+        bungee: ['Bungee', 'cursive'],
+        cool: ['Gloria Hallelujah', 'cursive']
+      }
     },
   },
   plugins: [],
