@@ -35,16 +35,16 @@ const Navbar = () => {
           {/* Dropdown Menu */}
           <div className="">
           <ul className={`lg:flex ${showMenu ? "flex items-center" : "hidden"} absolute top-full left-20 bg-gray-800 text-gray-200 mt-1 shadow-lg py-3 px-3 lg:relative lg:bg-transparent lg:shadow-none lg:py-0 lg:flex lg:gap-5 flex justify-between border border-gray-600 bg-opacity-30 p-2 rounded-2xl`}>
-            <li className="hover:bg-gray-700 rounded-xl p-2 transition-colors">
+            <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
               <a href="/home">Home</a>
             </li>
-            <li className="hover:bg-gray-700 rounded-xl p-2 transition-colors">
+            <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
               <a href="/blogs">Blogs</a>
             </li>
-            <li className="hover:bg-gray-700 rounded-xl p-2 transition-colors">
+            <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
               <a href="#">News</a>
             </li>
-            <li className="hover:bg-gray-700 rounded-xl p-2 transition-colors">
+            <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
               <a href="#">Chatbot</a>
             </li>
           </ul>
