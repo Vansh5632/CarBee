@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -36,16 +37,16 @@ const Navbar = () => {
           <div className="">
           <ul className={`lg:flex ${showMenu ? "flex items-center" : "hidden"} absolute top-full left-20 bg-gray-800 text-gray-200 mt-1 shadow-lg py-3 px-3 lg:relative lg:bg-transparent lg:shadow-none lg:py-0 lg:flex lg:gap-5 flex justify-between border border-gray-600 bg-opacity-30 p-2 rounded-2xl`}>
             <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
-              <a href="/home">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
-              <a href="/blogs">Blogs</a>
+            <Link to="/news">News</Link>
             </li>
             <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
-              <a href="#">News</a>
+            <Link to="/discuss">Discuss</Link>
             </li>
             <li className="hover:bg-gray-700 rounded-2xl p-2 transition-colors">
-              <a href="#">Chatbot</a>
+            <Link to="/carobot">Carobot</Link>
             </li>
           </ul>
           </div>
