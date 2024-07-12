@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ onSignInClick, onSignUpClick }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const toggleMenu = () => {
@@ -52,10 +52,16 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex flex-row gap-2">
-          <button className="bg-purple-600 text-white px-3 py-1.5 rounded-md transform transition-transform hover:-translate-y-1 hover:shadow-lg hover:bg-purple-700">
+          <button 
+            className="bg-purple-600 text-white px-3 py-1.5 rounded-md transform transition-transform hover:-translate-y-1 hover:shadow-lg hover:bg-purple-700"
+            onClick={onSignInClick}
+          >
             Sign In
           </button>
-          <button className="bg-purple-400 text-white px-3 py-1.5 rounded-md transform transition-transform hover:-translate-y-1 hover:shadow-lg hover:bg-purple-500">
+          <button 
+            className="bg-purple-400 text-white px-3 py-1.5 rounded-md transform transition-transform hover:-translate-y-1 hover:shadow-lg hover:bg-purple-500"
+            onClick={onSignUpClick}
+          >
             Sign Up
           </button>
         </div>
