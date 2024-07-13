@@ -3,7 +3,8 @@ import axios from "axios";
 import bannerImage from "../assets/banner-YIlsm1GEG-transformed.jpeg";
 import discussImage from "../assets/discuss.png";
 import newImage from "../assets/car news.png";
-import botImage from "../assets/carobot.png"
+import botImage from "../assets/carobot.png";
+
 const Body = () => {
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -41,12 +42,12 @@ const Body = () => {
   }, [images]);
 
   return (
-    <div className="flex flex-col items-center py-20 text-white">
-      <div className="flex w-full">
+    <div className="flex flex-col items-center py-[200px] text-white bg-gray-900">
+      <div className="flex flex-col md:flex-row w-full max-w-7xl px-4 md:px-8">
         {/* Left Container */}
-        <div className="w-1/2 flex flex-col items-center justify-center space-y-4 pl-10 pt-24">
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center space-y-4 mb-8 md:mb-0">
           <div className="min-w-fit min-h-fit flex items-center justify-center">
-            <p className="font-mono text-[30px]">
+            <p className="font-mono text-lg md:text-2xl text-center md:text-left">
               Welcome to Car Enthusiast Haven! This website is dedicated to all
               things cars, featuring a stunning collection of car images,
               detailed reviews, and the latest news. Whether you're a car
@@ -57,9 +58,9 @@ const Body = () => {
         </div>
 
         {/* Right Container */}
-        <div className="w-1/2 flex flex-col items-center justify-center space-y-4 pl-10 pt-24">
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center space-y-4">
           {images.length > 0 ? (
-            <div className="w-[400px] h-[350px] overflow-hidden rounded-xl border-4 border-gray-600 shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-2xl">
+            <div className="w-full max-w-md h-64 md:h-80 overflow-hidden rounded-xl border-4 border-gray-600 shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-2xl">
               <img
                 src={images[currentImageIndex].urls.small}
                 alt={images[currentImageIndex].alt_description}
@@ -68,7 +69,7 @@ const Body = () => {
               />
             </div>
           ) : (
-            <div className="w-[200px] h-[200px] border-2 border-black flex items-center justify-center">
+            <div className="w-full max-w-md h-64 md:h-80 border-2 border-gray-600 flex items-center justify-center">
               Loading...
             </div>
           )}
@@ -78,7 +79,7 @@ const Body = () => {
       {/* Banner Image */}
       <div
         id="banner"
-        className="relative mt-[100px] w-full h-[300px] flex justify-center items-center hover:brightness-75"
+        className="relative mt-16 w-full h-48 md:h-64 flex justify-center items-center hover:brightness-75"
         style={{
           backgroundImage: `url(${bannerImage})`,
           backgroundSize: "cover",
@@ -86,76 +87,41 @@ const Body = () => {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50 blur-2xl"></div>
-        <h1 className="relative text-white text-[150px] z-10 items-center font-cool">
+        <h1 className="relative text-white text-4xl md:text-6xl lg:text-8xl z-10 items-center font-cool text-center">
           It's About Cars
         </h1>
       </div>
-      <div className="flex flex-col p-5">
-  <h1 className="text-center text-[80px] mt-5 mb-5">Features</h1>
-  
-  {/* Discuss Section */}
-  <div
-    id="Discuss"
-    className="flex flex-row border-4 border-gray-800 rounded-2xl bg-[#131313] mx-10 items-center justify-evenly hover:border-blue-500 hover:shadow-lg transition duration-300"
-  >
-    <div className="flex flex-col w-[60%] p-5">
-      <p className="text-[30px]">
-        The Discuss feature on a car-focused website allows users to
-        engage in conversations about cars. Users can create profiles,
-        participate in forums or comment sections, and share their
-        thoughts, ask questions, and provide answers. This fosters a
-        community where enthusiasts can discuss car models, maintenance
-        tips, industry news, and personal experiences.
-      </p>
-    </div>
-    <div className="flex flex-col w-auto p-5">
-      <img
-        src={discussImage}
-        alt="Discuss feature"
-        className="w-[300px] h-[280px] transform transition duration-300 hover:scale-105"
-      />
-    </div>
-  </div>
 
-  {/* News Section */}
-  <div
-    id="News"
-    className="flex flex-row border-4 border-gray-800 bg-[#131313] rounded-2xl mx-10 items-center justify-evenly hover:border-blue-500 hover:shadow-lg transition duration-300 mt-10"
-  >
-    <div className="flex flex-col w-[60%] p-5">
-      <p className="text-[30px]">
-        The "News" section keeps users updated with the latest car industry news, trends, and updates. Stay informed about new car releases, automotive technology advancements, and market insights.
-      </p>
-    </div>
-    <div className="flex flex-col w-auto p-5">
-      <img
-        src={newImage}
-        alt="News feature"
-        className="w-[300px] h-[280px] transform transition duration-300 hover:scale-105"
-      />
-    </div>
-  </div>
-
-  {/* Carobot Section */}
-  <div
-    id="carobot"
-    className="flex flex-row border-4 bg-[#131313] border-gray-800 rounded-2xl mx-10 items-center justify-evenly hover:border-blue-500 hover:shadow-lg transition duration-300 mt-10"
-  >
-    <div className="flex flex-col w-[60%] p-5">
-      <p className="text-[30px]">
-        The "Carobot" feature offers an interactive chatbot that helps users find information about cars, get maintenance tips, and even troubleshoot issues. It's your personal car assistant available 24/7.
-      </p>
-    </div>
-    <div className="flex flex-col w-auto p-5">
-      <img
-        src={botImage}
-        alt="Carobot feature"
-        className="w-[300px] h-[280px] transform transition duration-300 hover:scale-105"
-      />
-    </div>
-  </div>
-</div>
-
+      <div className="flex flex-col p-5 max-w-7xl w-full">
+        <h1 className="text-center text-4xl md:text-6xl mt-10 mb-10">Features</h1>
+        
+        {/* Feature Sections */}
+        {[
+          { id: "Discuss", title: "Discuss", image: discussImage, description: "The Discuss feature allows users to engage in conversations about cars. Users can create profiles, participate in forums or comment sections, and share their thoughts, ask questions, and provide answers." },
+          { id: "News", title: "News", image: newImage, description: "The News section keeps users updated with the latest car industry news, trends, and updates. Stay informed about new car releases, automotive technology advancements, and market insights." },
+          { id: "carobot", title: "Carobot", image: botImage, description: "The Carobot feature offers an interactive chatbot that helps users find information about cars, get maintenance tips, and even troubleshoot issues. It's your personal car assistant available 24/7." }
+        ].map((feature, index) => (
+          <div
+            key={feature.id}
+            id={feature.id}
+            className={`flex flex-col md:flex-row border-4 border-gray-800 rounded-2xl bg-[#131313] mx-2 md:mx-10 items-center justify-evenly hover:border-blue-500 hover:shadow-lg transition duration-300 ${index > 0 ? 'mt-10' : ''}`}
+          >
+            <div className="flex flex-col w-full md:w-[60%] p-5">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">{feature.title}</h2>
+              <p className="text-lg md:text-xl">
+                {feature.description}
+              </p>
+            </div>
+            <div className="flex flex-col w-full md:w-auto p-5">
+              <img
+                src={feature.image}
+                alt={`${feature.title} feature`}
+                className="w-full md:w-[300px] h-auto md:h-[280px] object-contain transform transition duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
