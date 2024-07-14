@@ -7,6 +7,7 @@ import Carobot from "./pages/Carobot";
 import Navbar from "./components/Navbar";
 import LoginModal from "./components/LoginModal";
 import SignUpPage from "./components/SignUpPage";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -30,24 +31,26 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Navbar
-        onSignInClick={handleOpenLogin}
-        onSignUpClick={handleOpenSignUp}
-      />
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={handleCloseLogin}
-        onSignUpClick={handleOpenSignUp}
-      />
-      <SignUpPage isOpen={isSignUpOpen} onClose={handleCloseSignUp} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/discuss" element={<Discuss />} />
-        <Route path="/carobot" element={<Carobot />} />
-      </Routes>
-    </div>
+    <AuthProvider>
+      <div>
+        <Navbar
+          onSignInClick={handleOpenLogin}
+          onSignUpClick={handleOpenSignUp}
+        />
+        <LoginModal
+          isOpen={isLoginOpen}
+          onClose={handleCloseLogin}
+          onSignUpClick={handleOpenSignUp}
+        />
+        <SignUpPage isOpen={isSignUpOpen} onClose={handleCloseSignUp} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/discuss" element={<Discuss />} />
+          <Route path="/carobot" element={<Carobot />} />
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 };
 
