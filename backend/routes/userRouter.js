@@ -1,5 +1,8 @@
+const userControl = require('../controllers/userControl');
+
 const router = require('express').Router();
-router.post('/signup',(req,res)=>{
-    res.json({msg:"testing routes"})
-})
-module.exports = router
+
+router.post('/signup',userControl.signup);
+router.post('refreshtoken',userControl.refreshtoken);
+
+module.exports = router;
