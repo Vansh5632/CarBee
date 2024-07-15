@@ -20,6 +20,7 @@ const SignUpPage = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  // If the modal is not open, return null
   if (!isOpen) return null;
 
   return (
