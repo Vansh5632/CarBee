@@ -2,78 +2,87 @@ import React, { useState, useEffect } from "react";
 import { FaHeart, FaComment, FaUser } from "react-icons/fa";
 
 const Discuss = () => {
-  const [posts, setPosts] = useState([]); // State to store the posts
-  const [newPost, setNewPost] = useState(""); // State to store the new post input
-  const [commentInput, setCommentInput] = useState({}); // State to store the comment input for each post
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState("");
+  const [commentInput, setCommentInput] = useState({});
 
-  // Simulating fetching posts from an API
   useEffect(() => {
-    const fetchedPosts = [
-      {
-        id: 1,
-        author: "CarLover123",
-        content: "Just got my hands on the new Tesla Model S Plaid. It's insanely fast!",
-        likes: 15,
-        comments: [
-          { id: 101, author: "EVEnthusiast", content: "Lucky you! How's the interior?" },
-          { id: 102, author: "SpeedDemon", content: "0-60 time?" }
-        ],
-        timestamp: "2023-07-13 14:30:00",
-      },
-      {
-        id: 2,
-        author: "ClassicCarGuy",
-        content: "Restored a 1969 Mustang this weekend. Nothing beats the classics!",
-        likes: 23,
-        comments: [
-          { id: 201, author: "MuscleCar4Life", content: "Pictures or it didn't happen!" },
-        ],
-        timestamp: "2023-07-12 10:15:00",
-      },
-    ];
-    setPosts(fetchedPosts);
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/posts");
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
-  const handlePostSubmit = (e) => {
+  const handlePostSubmit = async (e) => {
     e.preventDefault();
     if (newPost.trim()) {
       const newPostObj = {
-        id: Date.now(),
-        author: "You", // In a real app, this would be the logged-in user
+        author: "You",
         content: newPost,
-        likes: 0,
-        comments: [],
-        timestamp: new Date().toLocaleString(),
       };
-      setPosts([newPostObj, ...posts]);
-      setNewPost("");
+      try {
+        const response = await fetch("http://localhost:5000/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPostObj),
+        });
+        const savedPost = await response.json();
+        setPosts([savedPost, ...posts]);
+        setNewPost("");
+      } catch (error) {
+        console.error("Error submitting post:", error);
+      }
     }
   };
 
-  const handleLike = (postId) => {
-    setPosts(
-      posts.map((post) =>
-        post.id === postId ? { ...post, likes: post.likes + 1 } : post
-      )
-    );
+  const handleLike = async (postId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const updatedPost = await response.json();
+      setPosts(
+        posts.map((post) => (post._id === postId ? updatedPost : post))
+      );
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
   };
 
-  const handleCommentSubmit = (postId) => {
+  const handleCommentSubmit = async (postId) => {
     if (commentInput[postId]?.trim()) {
-      setPosts(
-        posts.map((post) =>
-          post.id === postId
-            ? {
-                ...post,
-                comments: [
-                  ...post.comments,
-                  { id: Date.now(), author: "You", content: commentInput[postId] },
-                ],
-              }
-            : post
-        )
-      );
-      setCommentInput({ ...commentInput, [postId]: "" });
+      const newComment = {
+        author: "You",
+        content: commentInput[postId],
+      };
+      try {
+        const response = await fetch(`http://localhost:5000/posts/${postId}/comments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newComment),
+        });
+        const updatedPost = await response.json();
+        setPosts(
+          posts.map((post) => (post._id === postId ? updatedPost : post))
+        );
+        setCommentInput({ ...commentInput, [postId]: "" });
+      } catch (error) {
+        console.error("Error submitting comment:", error);
+      }
     }
   };
 
@@ -83,8 +92,7 @@ const Discuss = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
           Car Enthusiast Discussions
         </h2>
-        
-        {/* New Post Form */}
+
         <form onSubmit={handlePostSubmit} className="mb-8 bg-gray-800 p-4 rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Create a new post</h3>
           <textarea
@@ -102,11 +110,10 @@ const Discuss = () => {
           </button>
         </form>
 
-        {/* Posts Feed */}
         <div className="space-y-6">
           {posts.map((post) => (
             <div
-              key={post.id}
+              key={post._id}
               className="p-4 rounded-lg bg-gray-800 border border-gray-700"
             >
               <div className="flex items-center mb-2">
@@ -114,12 +121,11 @@ const Discuss = () => {
                 <span className="font-semibold">{post.author}</span>
               </div>
               <p className="text-lg mb-2">{post.content}</p>
-              <div className="text-sm text-gray-400 mb-4">{post.timestamp}</div>
+              <div className="text-sm text-gray-400 mb-4">{new Date(post.timestamp).toLocaleString()}</div>
               
-              {/* Like and Comment buttons */}
               <div className="flex items-center space-x-4 mb-4">
                 <button
-                  onClick={() => handleLike(post.id)}
+                  onClick={() => handleLike(post._id)}
                   className="flex items-center space-x-1 text-pink-500 hover:text-pink-600"
                 >
                   <FaHeart />
@@ -131,11 +137,10 @@ const Discuss = () => {
                 </button>
               </div>
 
-              {/* Comments */}
               <div className="space-y-2 mb-4">
                 {post.comments.map((comment) => (
                   <div
-                    key={comment.id}
+                    key={comment._id}
                     className="p-2 bg-gray-700 rounded text-sm"
                   >
                     <span className="font-semibold mr-2">{comment.author}:</span>
@@ -144,21 +149,20 @@ const Discuss = () => {
                 ))}
               </div>
 
-              {/* New Comment Form */}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleCommentSubmit(post.id);
+                  handleCommentSubmit(post._id);
                 }}
                 className="mt-4 flex"
               >
                 <input
                   type="text"
-                  value={commentInput[post.id] || ""}
+                  value={commentInput[post._id] || ""}
                   onChange={(e) =>
                     setCommentInput({
                       ...commentInput,
-                      [post.id]: e.target.value,
+                      [post._id]: e.target.value,
                     })
                   }
                   placeholder="Add a comment..."
