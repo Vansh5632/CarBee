@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaHeart, FaComment, FaUser } from "react-icons/fa";
+const apiUrl = 'https://carbee-3.onrender.com'
 
 const Discuss = () => {
   const [posts, setPosts] = useState([]);
@@ -9,7 +10,7 @@ const Discuss = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/posts");
+        const response = await fetch(`${apiUrl}/posts`);
         const data = await response.json();
         setPosts(data);
       } catch (error) {
@@ -28,7 +29,7 @@ const Discuss = () => {
         content: newPost,
       };
       try {
-        const response = await fetch("http://localhost:5000/posts", {
+        const response = await fetch(`${apiUrl}/posts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,7 +47,7 @@ const Discuss = () => {
 
   const handleLike = async (postId) => {
     try {
-      const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
+      const response = await fetch(`${apiUrl}/posts/${postId}/like`, {
         method: "POST",
       });
       if (!response.ok) {
@@ -68,7 +69,7 @@ const Discuss = () => {
         content: commentInput[postId],
       };
       try {
-        const response = await fetch(`http://localhost:5000/posts/${postId}/comments`, {
+        const response = await fetch(`${apiUrl}/posts/${postId}/comments`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
