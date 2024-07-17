@@ -6,6 +6,8 @@ const postRoutes = require('./routes/posts');
 
 const app = express();
 const cors = require('cors');
+const connectDB = require('./config/db');
+
 const corsOptions = {
   origin: 'http://localhost:5173', // Replace with your frontend application's URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -23,12 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.error(err));
+connectDB();
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
